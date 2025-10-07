@@ -1,7 +1,7 @@
-import React, { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import TaskFilters from "./features/filters/TaskFilters";
 import { ITaskItem } from "./features/interfaces";
 import TaskList from "./features/taskList/TaskList";
-import TaskFilters from "./features/filters/TaskFilters";
 
 // Start
 
@@ -20,7 +20,7 @@ const initialTasks: ITaskItem[] = [
 
 export function ClunkyTodoList() {
   const [tasks, setTasks] = useState<ITaskItem[]>(initialTasks);
-    const [filter, setFilter] = useState("all");
+  const [filter, setFilter] = useState("all");
   const [show2orMore, setShow2orMore] = useState(false);
   const [tasksToRender, setTasksToRender] = useState<ITaskItem[]>([]);
 
@@ -43,36 +43,46 @@ export function ClunkyTodoList() {
     setTasksToRender(filteredTasks);
   }, [tasks, filter, show2orMore]);
 
-  const handleAddTask = () => {
+  // useCallback not really needed here,
+  // but it would be useful if we put all the other elements (h1, h2, input, button) into a
+  // separate component and memoize it
+  const handleAddTask = useCallback(() => {
     if (!newTaskRef.current) return;
 
     const text = newTaskRef.current.value;
     if (!text.trim()) return;
 
-      const tempTasks = [...tasks];
-      tempTasks.push({
-        id: crypto.randomUUID(),
-        text: text,
-        completed: false,
-      });
-      setTasks(tempTasks);
-      newTaskRef.current.value = "";
-  };
+    const newTask: ITaskItem = {
+      id: crypto.randomUUID(),
+      text: text,
+      completed: false,
+    };
+    setTasks((prevTasks) => [...prevTasks, newTask]);
+    newTaskRef.current.value = "";
+  }, [setTasks]);
 
-  const handleToggleComplete = (id: string) => {
-    const updatedTasks = tasks.map((task) => {
-      if (task.id === id) {
-        return { ...task, completed: !task.completed };
-      }
-      return task;
-    });
-    setTasks(updatedTasks);
-  };
+  // leverage the setTasks previous state so we don't have to set tasks as a dependency
+  const handleToggleComplete = useCallback(
+    (id: string) => {
+      setTasks((prevTasks) =>
+        prevTasks.map((task) => {
+          if (task.id === id) {
+            return { ...task, completed: !task.completed };
+          }
+          return task;
+        })
+      );
+    },
+    [setTasks]
+  );
 
-  const handleDeleteTask = (id: string) => {
-    const tempTasks = tasks.filter((task) => task.id !== id);
-    setTasks(tempTasks);
-  };
+  // leverage the setTasks previous state so we don't have to set tasks as a dependency
+  const handleDeleteTask = useCallback(
+    (id: string) => {
+      setTasks((prevTasks) => prevTasks.filter((task) => task.id !== id));
+    },
+    [setTasks]
+  );
 
   return (
     <div
