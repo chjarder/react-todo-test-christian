@@ -20,10 +20,11 @@ const initialTasks: ITaskItem[] = [
 
 export function ClunkyTodoList() {
   const [tasks, setTasks] = useState<ITaskItem[]>(initialTasks);
-  const [newTask, setNewTask] = useState("");
-  const [filter, setFilter] = useState("all");
+    const [filter, setFilter] = useState("all");
   const [show2orMore, setShow2orMore] = useState(false);
   const [tasksToRender, setTasksToRender] = useState<ITaskItem[]>([]);
+
+  const newTaskRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
     let filteredTasks = tasks;
@@ -42,21 +43,20 @@ export function ClunkyTodoList() {
     setTasksToRender(filteredTasks);
   }, [tasks, filter, show2orMore]);
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setNewTask(event.target.value);
-  };
-
   const handleAddTask = () => {
-    if (newTask.trim() !== "") {
+    if (!newTaskRef.current) return;
+
+    const text = newTaskRef.current.value;
+    if (!text.trim()) return;
+
       const tempTasks = [...tasks];
       tempTasks.push({
         id: crypto.randomUUID(),
-        text: newTask,
+        text: text,
         completed: false,
       });
       setTasks(tempTasks);
-      setNewTask("");
-    }
+      newTaskRef.current.value = "";
   };
 
   const handleToggleComplete = (id: string) => {
@@ -88,12 +88,7 @@ export function ClunkyTodoList() {
       <div>
         <h1>To-Do List</h1>
         <h2>Items: {tasks.length}</h2>
-        <input
-          type="text"
-          value={newTask}
-          onChange={handleInputChange}
-          placeholder="Add new task"
-        />
+        <input type="text" ref={newTaskRef} placeholder="Add new task" />
         <button onClick={handleAddTask}>Add</button>
         <TaskFilters
           // passing anonymous function will trigger re-render.
