@@ -3,8 +3,6 @@ import TaskFilters from "./features/filters/TaskFilters";
 import { ITaskItem } from "./features/interfaces";
 import TaskList from "./features/taskList/TaskList";
 
-// Start
-
 const has2orMoreWords = (text: string) => {
   // for some reason, this regex does not work here: /([a-zA-Z]+\s?\b){2,}/g
   // split words instead
