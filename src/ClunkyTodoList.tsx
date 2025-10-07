@@ -127,6 +127,7 @@ export function ClunkyTodoList() {
             </li>
           ))}
         </ul>
+        <button onClick={() => setTasks([])}>Delete All Tasks</button>
       </div>
     </div>
   );
