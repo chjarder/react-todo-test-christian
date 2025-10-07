@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { ITaskItem } from "./features/interfaces";
 import TaskList from "./features/taskList/TaskList";
+import TaskFilters from "./features/filters/TaskFilters";
 
 // Start
 
@@ -102,18 +103,11 @@ export function ClunkyTodoList() {
           placeholder="Add new task"
         />
         <button onClick={handleAddTask}>Add</button>
-        <div>
-          <button onClick={() => setFilter("all")}>All</button>
-          <button onClick={() => setFilter("active")}>Active</button>
-          <button onClick={() => setFilter("completed")}>Completed</button>
-          <button
-            onClick={() => setShow2orMore(!show2orMore)}
-            //  change btn bgColor to show that the filter is currently active
-            style={{ background: show2orMore ? "blue" : "" }}
-          >
-            2 or more words
-          </button>
-        </div>
+        <TaskFilters
+          btn2orMoreActive={show2orMore}
+          setShow2orMore={() => setShow2orMore(!show2orMore)}
+          setFilter={setFilter}
+        />
         <TaskList
           tasksToRender={tasksToRender}
           handleDeleteTask={handleDeleteTask}
