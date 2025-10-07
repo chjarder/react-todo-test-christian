@@ -55,39 +55,50 @@ export function ClunkyTodoList() {
   }, [tasks]);
 
   return (
-    <div>
-      <h1>To-Do List</h1>
-      <h2>Items: {totalCount}</h2>
-      <input
-        type="text"
-        value={newTask}
-        onChange={handleInputChange}
-        placeholder="Add new task"
-      />
-      <button onClick={handleAddTask}>Add</button>
+    <div
+      style={{
+        width: "100vw",
+        height: "10vh",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
       <div>
-        <button onClick={() => setFilter("all")}>All</button>
-        <button onClick={() => setFilter("active")}>Active</button>
-        <button onClick={() => setFilter("completed")}>Completed</button>
+        <h1>To-Do List</h1>
+        <h2>Items: {totalCount}</h2>
+        <input
+          type="text"
+          value={newTask}
+          onChange={handleInputChange}
+          placeholder="Add new task"
+        />
+        <button onClick={handleAddTask}>Add</button>
+        <div>
+          <button onClick={() => setFilter("all")}>All</button>
+          <button onClick={() => setFilter("active")}>Active</button>
+          <button onClick={() => setFilter("completed")}>Completed</button>
+        </div>
+        <ul>
+          {tasksToRender.map((task, index) => (
+            <li key={index}>
+              <input
+                type="checkbox"
+                checked={task.completed}
+                onChange={() => handleToggleComplete(task.id)}
+              />
+              <span
+                style={{
+                  textDecoration: task.completed ? "line-through" : "none",
+                }}
+              >
+                {task.text}
+              </span>
+            </li>
+          ))}
+        </ul>
       </div>
-      <ul>
-        {tasksToRender.map((task, index) => (
-          <li key={index}>
-            <input
-              type="checkbox"
-              checked={task.completed}
-              onChange={() => handleToggleComplete(task.id)}
-            />
-            <span
-              style={{
-                textDecoration: task.completed ? "line-through" : "none",
-              }}
-            >
-              {task.text}
-            </span>
-          </li>
-        ))}
-      </ul>
     </div>
   );
 }
