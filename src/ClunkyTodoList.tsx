@@ -37,7 +37,6 @@ export function ClunkyTodoList() {
     setTasksToRender(filteredTasks);
   }, [tasks, filter, show2orMore]);
 
-
   const handleInputChange = (event) => {
     setNewTask(event.target.value);
   };
@@ -65,6 +64,11 @@ export function ClunkyTodoList() {
       return task;
     });
     setTasks(updatedTasks);
+  };
+
+  const handleDeleteTask = (id: number) => {
+    const tempTasks = tasks.filter((task) => task.id !== id);
+    setTasks(tempTasks);
   };
 
   const totalCount = useMemo(() => {
@@ -119,6 +123,7 @@ export function ClunkyTodoList() {
               >
                 {task.text}
               </span>
+              <button onClick={() => handleDeleteTask(task.id)}>[x]</button>
             </li>
           ))}
         </ul>
