@@ -62,13 +62,7 @@ export function ClunkyTodoList() {
   const handleToggleComplete = (id: string) => {
     const updatedTasks = tasks.map((task) => {
       if (task.id === id) {
-        let tempTask = {
-          id: task.id,
-          text: task.text,
-          completed: task.completed,
-        };
-        tempTask.completed = !tempTask.completed;
-        return tempTask;
+        return { ...task, completed: !task.completed };
       }
       return task;
     });
