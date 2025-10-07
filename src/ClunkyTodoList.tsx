@@ -17,6 +17,7 @@ export function ClunkyTodoList() {
   ]);
   const [newTask, setNewTask] = useState("");
   const [filter, setFilter] = useState("all");
+  const [show2orMore, setShow2orMore] = useState(false);
 
   const handleInputChange = (event) => {
     setNewTask(event.target.value);
@@ -54,12 +55,16 @@ export function ClunkyTodoList() {
       filteredTasks = tasks.filter((task) => task.completed);
     } else if (filter === "active") {
       filteredTasks = tasks.filter((task) => !task.completed);
-    } else if (filter === "show2ormore") {
-      // TODO: combine with other filters above
-      filteredTasks = tasks.filter((task) => has2orMoreWords(task.text));
     }
+
+    if (show2orMore) {
+      filteredTasks = filteredTasks.filter((task) =>
+        has2orMoreWords(task.text)
+      );
+    }
+
     setTasksToRender(filteredTasks);
-  }, [tasks, filter]);
+  }, [tasks, filter, show2orMore]);
 
   const totalCount = useMemo(() => {
     return tasks.length;
@@ -90,7 +95,11 @@ export function ClunkyTodoList() {
           <button onClick={() => setFilter("all")}>All</button>
           <button onClick={() => setFilter("active")}>Active</button>
           <button onClick={() => setFilter("completed")}>Completed</button>
-          <button onClick={() => setFilter("show2ormore")}>
+          <button
+            onClick={() => setShow2orMore(!show2orMore)}
+            //  change btn bgColor to show that the filter is currently active
+            style={{ background: show2orMore ? "blue" : "" }}
+          >
             2 or more words
           </button>
         </div>
