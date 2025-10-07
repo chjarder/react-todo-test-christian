@@ -20,6 +20,24 @@ export function ClunkyTodoList() {
   const [show2orMore, setShow2orMore] = useState(false);
   const [tasksToRender, setTasksToRender] = useState<any[]>([]);
 
+  useEffect(() => {
+    let filteredTasks = tasks;
+    if (filter === "completed") {
+      filteredTasks = tasks.filter((task) => task.completed);
+    } else if (filter === "active") {
+      filteredTasks = tasks.filter((task) => !task.completed);
+    }
+
+    if (show2orMore) {
+      filteredTasks = filteredTasks.filter((task) =>
+        has2orMoreWords(task.text)
+      );
+    }
+
+    setTasksToRender(filteredTasks);
+  }, [tasks, filter, show2orMore]);
+
+
   const handleInputChange = (event) => {
     setNewTask(event.target.value);
   };
@@ -48,23 +66,6 @@ export function ClunkyTodoList() {
     });
     setTasks(updatedTasks);
   };
-
-  useEffect(() => {
-    let filteredTasks = tasks;
-    if (filter === "completed") {
-      filteredTasks = tasks.filter((task) => task.completed);
-    } else if (filter === "active") {
-      filteredTasks = tasks.filter((task) => !task.completed);
-    }
-
-    if (show2orMore) {
-      filteredTasks = filteredTasks.filter((task) =>
-        has2orMoreWords(task.text)
-      );
-    }
-
-    setTasksToRender(filteredTasks);
-  }, [tasks, filter, show2orMore]);
 
   const totalCount = useMemo(() => {
     return tasks.length;
