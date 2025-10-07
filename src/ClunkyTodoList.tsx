@@ -1,6 +1,14 @@
 import React, { useEffect, useMemo, useState } from "react";
 
 // Start
+
+const has2orMoreWords = (text: string) => {
+  // for some reason, this regex does not work here: /([a-zA-Z]+\s?\b){2,}/g
+  // split words instead
+  const words = text.split(" ");
+  return words.length >= 2;
+};
+
 export function ClunkyTodoList() {
   const [tasks, setTasks] = useState([
     { id: 1, text: "Learn React", completed: false },
@@ -46,6 +54,9 @@ export function ClunkyTodoList() {
       filteredTasks = tasks.filter((task) => task.completed);
     } else if (filter === "active") {
       filteredTasks = tasks.filter((task) => !task.completed);
+    } else if (filter === "show2ormore") {
+      // TODO: combine with other filters above
+      filteredTasks = tasks.filter((task) => has2orMoreWords(task.text));
     }
     setTasksToRender(filteredTasks);
   }, [tasks, filter]);
@@ -79,6 +90,9 @@ export function ClunkyTodoList() {
           <button onClick={() => setFilter("all")}>All</button>
           <button onClick={() => setFilter("active")}>Active</button>
           <button onClick={() => setFilter("completed")}>Completed</button>
+          <button onClick={() => setFilter("show2ormore")}>
+            2 or more words
+          </button>
         </div>
         <ul>
           {tasksToRender.map((task, index) => (
