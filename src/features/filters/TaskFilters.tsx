@@ -1,7 +1,8 @@
 import { memo } from "react";
+import { Filter } from "../interfaces";
 
 export default memo(function TaskFilters(props: {
-  setFilter: (filter: string) => void;
+  setFilter: (filter: Filter) => void;
   setShow2orMore: (show: boolean) => void;
   btn2orMoreActive: boolean;
 }) {
@@ -10,6 +11,8 @@ export default memo(function TaskFilters(props: {
       <button onClick={() => props.setFilter("all")}>All</button>
       <button onClick={() => props.setFilter("active")}>Active</button>
       <button onClick={() => props.setFilter("completed")}>Completed</button>
+      {/* uncomment below to see the Type error */}
+      {/* <button onClick={() => props.setFilter("asdasd")}>Completed</button> */}
       <button
         onClick={() => props.setShow2orMore(!props.btn2orMoreActive)}
         //  change btn bgColor to show that the filter is currently active
