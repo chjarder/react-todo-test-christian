@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { ITaskItem } from "./features/interfaces";
+import TaskList from "./features/taskList/TaskList";
 
 // Start
 
@@ -113,25 +114,11 @@ export function ClunkyTodoList() {
             2 or more words
           </button>
         </div>
-        <ul>
-          {tasksToRender.map((task) => (
-            <li key={task.id}>
-              <input
-                type="checkbox"
-                checked={task.completed}
-                onChange={() => handleToggleComplete(task.id)}
-              />
-              <span
-                style={{
-                  textDecoration: task.completed ? "line-through" : "none",
-                }}
-              >
-                {task.text}
-              </span>
-              <button onClick={() => handleDeleteTask(task.id)}>[x]</button>
-            </li>
-          ))}
-        </ul>
+        <TaskList
+          tasksToRender={tasksToRender}
+          handleDeleteTask={handleDeleteTask}
+          handleToggleComplete={handleToggleComplete}
+        />
         <button onClick={() => setTasks([])}>Delete All Tasks</button>
       </div>
     </div>
