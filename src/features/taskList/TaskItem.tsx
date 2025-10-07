@@ -9,7 +9,7 @@ export default memo(function TaskItem(props: {
   const task = props.task;
 
   return (
-    <li key={task.id}>
+    <li>
       <input
         type="checkbox"
         checked={task.completed}

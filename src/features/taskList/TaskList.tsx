@@ -10,6 +10,7 @@ export default function TaskList(props: {
     <ul>
       {props.tasksToRender.map((task) => (
         <TaskItem
+          key={task.id}
           task={task}
           handleDeleteTask={props.handleDeleteTask}
           handleToggleComplete={props.handleToggleComplete}
