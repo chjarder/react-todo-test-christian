@@ -11,9 +11,9 @@ const has2orMoreWords = (text: string) => {
 
 export function ClunkyTodoList() {
   const [tasks, setTasks] = useState([
-    { id: 1, text: "Learn React", completed: false },
-    { id: 2, text: "Write code", completed: true },
-    { id: 3, text: "Eat lunch", completed: false },
+    { id: crypto.randomUUID(), text: "Learn React", completed: false },
+    { id: crypto.randomUUID(), text: "Write code", completed: true },
+    { id: crypto.randomUUID(), text: "Eat lunch", completed: false },
   ]);
   const [newTask, setNewTask] = useState("");
   const [filter, setFilter] = useState("all");
@@ -44,7 +44,11 @@ export function ClunkyTodoList() {
   const handleAddTask = () => {
     if (newTask.trim() !== "") {
       const tempTasks = [...tasks];
-      tempTasks.push({ id: Date.now(), text: newTask, completed: false });
+      tempTasks.push({
+        id: crypto.randomUUID(),
+        text: newTask,
+        completed: false,
+      });
       setTasks(tempTasks);
       setNewTask("");
     }
@@ -66,7 +70,7 @@ export function ClunkyTodoList() {
     setTasks(updatedTasks);
   };
 
-  const handleDeleteTask = (id: number) => {
+  const handleDeleteTask = (id: string) => {
     const tempTasks = tasks.filter((task) => task.id !== id);
     setTasks(tempTasks);
   };
