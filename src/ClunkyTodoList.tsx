@@ -19,7 +19,7 @@ export function ClunkyTodoList() {
   const [newTask, setNewTask] = useState("");
   const [filter, setFilter] = useState("all");
   const [show2orMore, setShow2orMore] = useState(false);
-  const [tasksToRender, setTasksToRender] = useState<any[]>([]);
+  const [tasksToRender, setTasksToRender] = useState<ITaskItem[]>([]);
 
   useEffect(() => {
     let filteredTasks = tasks;
