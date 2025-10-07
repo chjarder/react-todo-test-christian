@@ -12,13 +12,15 @@ const has2orMoreWords = (text: string) => {
   return words.length >= 2;
 };
 
-export function ClunkyTodoList() {
-  const [tasks, setTasks] = useState<ITaskItem[]>([
+const initialTasks: ITaskItem[] = [
     { id: crypto.randomUUID(), text: "Learn React", completed: false },
     { id: crypto.randomUUID(), text: "Write code", completed: true },
     { id: crypto.randomUUID(), text: "Eat lunch", completed: false },
   ]);
-  const [newTask, setNewTask] = useState("");
+];
+
+export function ClunkyTodoList() {
+  const [tasks, setTasks] = useState<ITaskItem[]>(initialTasks);
   const [filter, setFilter] = useState("all");
   const [show2orMore, setShow2orMore] = useState(false);
   const [tasksToRender, setTasksToRender] = useState<ITaskItem[]>([]);
