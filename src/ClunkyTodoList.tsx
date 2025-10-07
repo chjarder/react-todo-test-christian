@@ -74,10 +74,6 @@ export function ClunkyTodoList() {
     setTasks(tempTasks);
   };
 
-  const totalCount = useMemo(() => {
-    return tasks.length;
-  }, [tasks]);
-
   return (
     <div
       style={{
@@ -91,7 +87,7 @@ export function ClunkyTodoList() {
     >
       <div>
         <h1>To-Do List</h1>
-        <h2>Items: {totalCount}</h2>
+        <h2>Items: {tasks.length}</h2>
         <input
           type="text"
           value={newTask}
