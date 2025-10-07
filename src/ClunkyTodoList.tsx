@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
+import { ITaskItem } from "./features/interfaces";
 
 // Start
 
@@ -10,7 +11,7 @@ const has2orMoreWords = (text: string) => {
 };
 
 export function ClunkyTodoList() {
-  const [tasks, setTasks] = useState([
+  const [tasks, setTasks] = useState<ITaskItem[]>([
     { id: crypto.randomUUID(), text: "Learn React", completed: false },
     { id: crypto.randomUUID(), text: "Write code", completed: true },
     { id: crypto.randomUUID(), text: "Eat lunch", completed: false },
