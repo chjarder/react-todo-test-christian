@@ -13,14 +13,14 @@ const has2orMoreWords = (text: string) => {
 };
 
 const initialTasks: ITaskItem[] = [
-    { id: crypto.randomUUID(), text: "Learn React", completed: false },
-    { id: crypto.randomUUID(), text: "Write code", completed: true },
-    { id: crypto.randomUUID(), text: "Eat lunch", completed: false },
-  ]);
+  { id: crypto.randomUUID(), text: "Learn React", completed: false },
+  { id: crypto.randomUUID(), text: "Write code", completed: true },
+  { id: crypto.randomUUID(), text: "Eat lunch", completed: false },
 ];
 
 export function ClunkyTodoList() {
   const [tasks, setTasks] = useState<ITaskItem[]>(initialTasks);
+  const [newTask, setNewTask] = useState("");
   const [filter, setFilter] = useState("all");
   const [show2orMore, setShow2orMore] = useState(false);
   const [tasksToRender, setTasksToRender] = useState<ITaskItem[]>([]);
@@ -106,8 +106,10 @@ export function ClunkyTodoList() {
         />
         <button onClick={handleAddTask}>Add</button>
         <TaskFilters
+          // passing anonymous function will trigger re-render.
+          // pass the function as is instead
           btn2orMoreActive={show2orMore}
-          setShow2orMore={() => setShow2orMore(!show2orMore)}
+          setShow2orMore={setShow2orMore}
           setFilter={setFilter}
         />
         <TaskList

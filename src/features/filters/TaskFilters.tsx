@@ -1,6 +1,8 @@
-export default function TaskFilters(props: {
+import { memo } from "react";
+
+export default memo(function TaskFilters(props: {
   setFilter: (filter: string) => void;
-  setShow2orMore: () => void;
+  setShow2orMore: (show: boolean) => void;
   btn2orMoreActive: boolean;
 }) {
   return (
@@ -9,7 +11,7 @@ export default function TaskFilters(props: {
       <button onClick={() => props.setFilter("active")}>Active</button>
       <button onClick={() => props.setFilter("completed")}>Completed</button>
       <button
-        onClick={props.setShow2orMore}
+        onClick={() => props.setShow2orMore(!props.btn2orMoreActive)}
         //  change btn bgColor to show that the filter is currently active
         style={{ background: props.btn2orMoreActive ? "blue" : "" }}
       >
@@ -17,4 +19,4 @@ export default function TaskFilters(props: {
       </button>
     </div>
   );
-}
+});
