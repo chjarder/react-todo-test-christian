@@ -38,7 +38,7 @@ export function ClunkyTodoList() {
     setTasksToRender(filteredTasks);
   }, [tasks, filter, show2orMore]);
 
-  const handleInputChange = (event) => {
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setNewTask(event.target.value);
   };
 
@@ -55,7 +55,7 @@ export function ClunkyTodoList() {
     }
   };
 
-  const handleToggleComplete = (id) => {
+  const handleToggleComplete = (id: string) => {
     const updatedTasks = tasks.map((task) => {
       if (task.id === id) {
         let tempTask = {
