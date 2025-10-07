@@ -48,7 +48,7 @@ export function ClunkyTodoList() {
       filteredTasks = tasks.filter((task) => !task.completed);
     }
     setTasksToRender(filteredTasks);
-  }, [tasks]);
+  }, [tasks, filter]);
 
   const totalCount = useMemo(() => {
     return tasks.length;
