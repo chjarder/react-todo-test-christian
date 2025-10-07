@@ -18,6 +18,7 @@ export function ClunkyTodoList() {
   const [newTask, setNewTask] = useState("");
   const [filter, setFilter] = useState("all");
   const [show2orMore, setShow2orMore] = useState(false);
+  const [tasksToRender, setTasksToRender] = useState<any[]>([]);
 
   const handleInputChange = (event) => {
     setNewTask(event.target.value);
@@ -48,7 +49,6 @@ export function ClunkyTodoList() {
     setTasks(updatedTasks);
   };
 
-  const [tasksToRender, setTasksToRender] = useState<any[]>([]);
   useEffect(() => {
     let filteredTasks = tasks;
     if (filter === "completed") {
