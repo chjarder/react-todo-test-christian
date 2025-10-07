@@ -52,7 +52,7 @@ export function ClunkyTodoList() {
 
   const totalCount = useMemo(() => {
     return tasks.length;
-  }, []);
+  }, [tasks]);
 
   return (
     <div>
